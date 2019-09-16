@@ -1,0 +1,19 @@
+{
+  "name": "chat-front",
+  "version": "1.0.0",
+  "description": "My bee&#39;s knees Nuxt.js project",
+  "author": "yujin song",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "sockjs-client": "^1.4.0",
+    "webstomp-client": "^1.2.6"
+  },
+  "devDependencies": {}
+}
