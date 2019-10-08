@@ -12,9 +12,9 @@
           <li class="event-message">
             <p>dd joined!</p>
           </li>
-<!--          <li class="chat-message"><i style="background-color: rgb(33, 150, 243);">d</i><span>dd</span>-->
-<!--            <p>안녕</p>-->
-<!--          </li>-->
+          <li class="chat-message"><i style="background-color: rgb(33, 150, 243);">d</i><span>dd</span>
+            <p>안녕</p>
+          </li>
         </ul>
 
         <form id="messageForm" name="messageForm">
@@ -32,13 +32,7 @@
 
 <script>
   export default {
-    name: "index",
-    methods: {
-
-    },
-    created () {
-      console.log('user:'+this.$store.state.user.userInfo.name)
-    }
+    name: "index"
   }
 </script>
 
