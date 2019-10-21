@@ -64,7 +64,7 @@ export default {
     },
     onMessageReceived(m) {
       console.log("received",JSON.parse(m.body).sessionId);
-      console.log('chatlist,' this.chatList)
+      console.log('chatlist', this.chatList)
     }
 
   }
