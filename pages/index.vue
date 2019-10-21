@@ -48,11 +48,9 @@ export default {
         {},
         JSON.stringify({sender: this.userName, type: 'JOIN'})
       )
-      console.log('connect 성공',this.stompClient.ws.sessionId)
+      console.log('connect 성공',this.stompClient.ws);
       // username 저장
       this.$store.state.user.userInfo.name = this.userName;
-//      sessionStorage.setItem('userName', this.userName);
-      console.log('session userName: ' + sessionStorage.getItem('userName'));
       // stompClient 저장
       this.$store.state.user.stompClient = this.stompClient;
       console.log(this.$store.state.user.stompClient);
@@ -63,8 +61,9 @@ export default {
       console.log('error')
     },
     onMessageReceived(m) {
-      console.log("received",JSON.parse(m.body).sessionId);
-      console.log('chatlist', this.chatList)
+      console.log("received1 sessionId: ",JSON.parse(m.body).sessionId);
+      this.$store.state.user.userInfo.sessionId = JSON.parse(m.body).sessionId;
+      //console.log('chatlist', this.chatList)
     }
 
   }
