@@ -11,7 +11,10 @@
         <ul id="messageArea">
           <template v-for="chat in chatList">
             <li class="event-message" v-if="chat.type=='JOIN'">
-              <p>{{ chat.userName }} joined!</p>
+              <p>{{ chat.userName }}님이 입장하였습니다.</p>
+            </li>
+            <li class="event-message" v-if="chat.type=='LEAVE'">
+              <p>{{ chat.userName }}님이 나갔습니다.</p>
             </li>
             <li class="chat-message" v-if="chat.type=='CHAT'" :class="myChat(chat.sessionId)" :data-user-id="chat.sessionId">
               <i style="background-color: rgb(33, 150, 243);"></i>
@@ -86,6 +89,17 @@
             if(this.$route.params.id == `${body.roomId}`) {
               this.chatList.push({
                 type: 'JOIN',
+                id: this.chatList.length+1,
+                userName: `${body.sender}`,
+                sessionId: `${body.sessionId}`,
+                roomId: `${body.roomId}`
+              });
+            }
+            break;
+          case 'LEAVE':
+            if(this.$route.params.id == `${body.roomId}`) {
+              this.chatList.push({
+                type: 'LEAVE',
                 id: this.chatList.length+1,
                 userName: `${body.sender}`,
                 sessionId: `${body.sessionId}`,
