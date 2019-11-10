@@ -25,8 +25,7 @@ export default {
   },
   data() {
     return {
-      userName: '',
-      stompClient: null
+      userName: ''
     }
   },
   methods: {

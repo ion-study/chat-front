@@ -46,7 +46,15 @@
     data() {
       return {
         msg: '',
-        chatList: []
+        chatList: [],
+        roomId : this.$route.params.id
+      }
+    },
+    beforeCreate() {
+      console.log("beforeCreate()");
+      if(!this.$store.state.user.userInfo.name) {
+        console.log("here");
+        this.$router.push('/');
       }
     },
     mounted() {
@@ -54,23 +62,40 @@
       console.log('mounted');
       _vue.connect();
     },
+    beforeRouteLeave (to, from, next) { // 현재 페이지 나가기 전 실행
+      if(this.$store.state.user.userInfo.name) { // beforeCreate() 훅 때문에 분기처리 필요
+        this.disconnect();
+        next();
+      }
+      next();
+    },
     methods: {
       connect() {
         var socket = new SockJS('http://localhost:8080/ws');
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, this.onConnected, this.onError);
+        console.log(this);
       },
       onConnected() {
-        // Subscribe to the Public Topic
-        this.stompClient.subscribe('/topic/public', this.onMessageReceived);
+        // roomId 구독
+        this.stompClient.subscribe(`/topic/public/room/${this.roomId}`, this.onMessageReceived);
         // Tell your username to the server
         this.stompClient.send("/app/chat.addUser",
           {},
           JSON.stringify({sender: this.$store.state.user.userInfo.name, type: 'JOIN', roomId: this.$route.params.id})
         )
         console.log('connect 성공',this.stompClient.ws);
-        // stompClient 저장
-        this.$store.state.user.stompClient = this.stompClient;
+      },
+      disconnect() {
+        // stompClient disconnect
+        if(this.stompClient != null) {
+          this.stompClient.disconnect();
+          console.log("stompClient disconnected");
+        }
+        // user state reset
+        this.$store.state.user.userInfo.name = "";
+        this.$store.state.user.userInfo.sessionId = "";
+        console.log("userinfo reset");
       },
       onError() {
         console.log('error')
@@ -85,39 +110,32 @@
               this.$store.state.user.userInfo.sessionId = `${body.sessionId}`;
               console.log('sessionId 등록:' + this.$store.state.user.userInfo.sessionId);
             }
-            // 같은 room일 경우 리스트 추가
-            if(this.$route.params.id == `${body.roomId}`) {
-              this.chatList.push({
-                type: 'JOIN',
-                id: this.chatList.length+1,
-                userName: `${body.sender}`,
-                sessionId: `${body.sessionId}`,
-                roomId: `${body.roomId}`
-              });
-            }
+            this.chatList.push({
+              type: 'JOIN',
+              id: this.chatList.length+1,
+              userName: `${body.sender}`,
+              sessionId: `${body.sessionId}`,
+              roomId: `${body.roomId}`
+            });
             break;
           case 'LEAVE':
-            if(this.$route.params.id == `${body.roomId}`) {
-              this.chatList.push({
-                type: 'LEAVE',
-                id: this.chatList.length+1,
-                userName: `${body.sender}`,
-                sessionId: `${body.sessionId}`,
-                roomId: `${body.roomId}`
-              });
-            }
+            this.chatList.push({
+              type: 'LEAVE',
+              id: this.chatList.length+1,
+              userName: `${body.sender}`,
+              sessionId: `${body.sessionId}`,
+              roomId: `${body.roomId}`
+            });
             break;
           case 'CHAT':
-            if(this.$route.params.id == `${body.roomId}`) {
-              this.chatList.push({
-                type: 'CHAT',
-                id: this.chatList.length + 1,
-                userName: `${body.sender}`,
-                content: `${body.content}`,
-                sessionId: `${body.sessionId}`,
-                roomId: `${body.roomId}`
-              });
-            }
+            this.chatList.push({
+              type: 'CHAT',
+              id: this.chatList.length + 1,
+              userName: `${body.sender}`,
+              content: `${body.content}`,
+              sessionId: `${body.sessionId}`,
+              roomId: `${body.roomId}`
+            });
             break;
           default:
             console.log('other type');
@@ -125,25 +143,23 @@
         console.log('chatList: ', this.chatList[this.chatList.length-1]);
       },
       message() {
-        if(this.msg && this.$store.state.user.stompClient) {
+        let stompClient = this.stompClient;
+        if(this.msg && stompClient) {
           var chatMessage = {
             sender: this.$store.state.user.userInfo.name,
             content: this.msg,
             type: 'CHAT',
             sessionId: this.$store.state.user.userInfo.sessionId,
-            roomId: this.$route.params.id
+            roomId: this.roomId
           };
-          this.$store.state.user.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+          stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
           this.msg = '';
         }
-      }
-    },
-    computed: {
-      myChat() {
-        return function(id) {
-          if(id === this.$store.state.user.userInfo.sessionId) return { 'my-chat': true }
-          else return {'my-chat': false }
-        }
+      },
+      /******** css ********/
+      myChat(id) {
+        if(id === this.$store.state.user.userInfo.sessionId) return { 'my-chat': true }
+        else return {'my-chat': false }
       }
     }
   }

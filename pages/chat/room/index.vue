@@ -39,7 +39,13 @@
           ]
       }
     },
-
+    beforeCreate() {
+      // userInfo 체크
+      if(!this.$store.state.user.userInfo.name) {
+        console.log("[chat/room] username 없을 경우 첫페이지로 리턴");
+        this.$router.push('/');
+      }
+    },
     methods: {
       goRoom(roomId) {
         // chat페이지 이동

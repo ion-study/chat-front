@@ -1,7 +1,6 @@
 export default {
   state: {
-    userInfo: {name: '', sessionId: ''},
-    stompClient: {test: 'test'}
+    userInfo: {name: '', sessionId: ''}
   }
   // getters: {
   // },
