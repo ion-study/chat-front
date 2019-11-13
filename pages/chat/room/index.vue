@@ -7,36 +7,44 @@
           <h2>Room List</h2>
           <h4 style="text-align: right">[user] {{$store.state.user.userInfo.name}}</h4>
         </div>
-        <ul id="roomArea"> <!-- 채팅방 리스트 나열 -->
-          <li class="room" v-for="room in rooms" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
+        <!-- 채팅방 리스트 나열 -->
+        <ul id="roomArea">
+          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
             <div>
-              <span>{{ room.roomId }}번 Room</span>
-              <p>방장 : {{ room.ownerName }}</p>
+              <span>[{{ room.roomId }}] {{room.roomName}}</span>
+              <p>owner : {{ room.ownerName }}</p>
             </div>
           </li>
         </ul>
+        <!-- 방만들기 버튼 -->
+        <div class="form-group text-center">
+          <button class="accent" @click="showModal=true">CREATE</button>
+        </div>
       </div>
     </div>
-
-
-
-
-
+    <!-- Modal Component -->
+    <Modal v-if="showModal" @close="showModal=false" @create="createRoom">
+      <h3 slot="header" class="modal-h3">Create the Room</h3>
+      <div slot="body" class="modal-cont">
+        <div><label for="room-name">title</label><input type="text" id="room-name" placeholder="제목"></div>
+        <div><label for="room-sec">공개 여부(임시)</label><input type="checkbox" id="room-sec"></div>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from '~/components/utils/Modal.vue'
   export default {
     name: "index",
+    components: {
+      Modal
+    },
     data() {
+      let rooms = this.$store.state.chat.rooms;
       return {
-        // 더미 data
-        rooms: [
-          {roomId: "1", ownerId: "111", ownerName: '가'},
-          {roomId: "2", ownerId: "222", ownerName: '나'},
-          {roomId: "3", ownerId: "333", ownerName: '다'},
-          {roomId: "4", ownerId: "444", ownerName: '라'}
-          ]
+        roomList: rooms,
+        showModal: false
       }
     },
     beforeCreate() {
@@ -50,6 +58,18 @@
       goRoom(roomId) {
         // chat페이지 이동
         this.$router.push('/chat/room/' + roomId);
+      },
+      createRoom() {
+        let roomName = document.getElementById("room-name").value;
+        // store room 추가
+        let newRoomId = this.roomList.length+1;
+        this.$store.state.chat.rooms.push({
+          roomId: `${newRoomId}`,
+          ownerId: "userID",
+          ownerName: `${this.$store.state.user.userInfo.name}`,
+          roomName: roomName
+        });
+        this.goRoom(newRoomId);
       }
     }
 
@@ -62,6 +82,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  font-size: 0.9rem;
 }
 .room {
   border: 3px solid #dedede !important;
@@ -72,5 +93,14 @@
 }
 .room:hover {
   border: 3px solid #128ff2 !important;
+}
+
+/***** Modal Custom *****/
+.modal-h3 {
+  margin-top: 0;
+  color: #128ff2;
+}
+.modal-cont {
+
 }
 </style>

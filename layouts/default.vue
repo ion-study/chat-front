@@ -60,6 +60,11 @@
     margin-bottom: 15px;
   }
 
+
+  .text-center {
+    text-align: center;
+  }
+
   input {
     padding-left: 10px;
     outline: none;
@@ -164,7 +169,8 @@
     overflow: auto;
     overflow-y: scroll;
     padding: 0 20px 0px 20px;
-    height: calc(100% - 150px);
+    /*height: calc(100% - 150px);*/
+    height: calc(100% - 190px);
   }
 
   #chat-page #messageForm {
@@ -302,5 +308,6 @@
     .chat-header h2 {
       font-size: 1.1em;
     }
+
   }
 </style>
