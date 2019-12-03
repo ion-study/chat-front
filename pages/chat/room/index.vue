@@ -9,10 +9,10 @@
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
-          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
+          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.id)">
             <div>
-              <span>[{{ room.roomId }}] {{room.roomName}}</span>
-              <p>owner : {{ room.ownerName }}</p>
+              <span>[{{ room.id }}] {{room.title}}</span>
+              <p>owner : ({{room.ownerId}}) {{ room.ownerName }}</p>
             </div>
           </li>
         </ul>
@@ -26,7 +26,7 @@
     <Modal v-if="showModal" @close="showModal=false" @create="createRoom">
       <h3 slot="header" class="modal-h3">Create the Room</h3>
       <div slot="body" class="modal-cont">
-        <div><label for="room-name">title</label><input type="text" id="room-name" placeholder="제목"></div>
+        <div><label for="room-title">title</label><input type="text" id="room-title" placeholder="제목"></div>
         <div><label for="room-sec">공개 여부(임시)</label><input type="checkbox" id="room-sec"></div>
       </div>
     </Modal>
@@ -40,10 +40,12 @@ import Modal from '~/components/utils/Modal.vue'
     components: {
       Modal
     },
+    async asyncData({ app }) {
+      const { data } = await app.$axios.$get('room/list')
+      return { roomList: data }
+    },
     data() {
-      let rooms = this.$store.state.chat.rooms;
       return {
-        roomList: rooms,
         showModal: false
       }
     },
@@ -59,17 +61,33 @@ import Modal from '~/components/utils/Modal.vue'
         // chat페이지 이동
         this.$router.push('/chat/room/' + roomId);
       },
-      createRoom() {
-        let roomName = document.getElementById("room-name").value;
-        // store room 추가
+      async createRoom() {
+        let roomTitle = document.getElementById("room-title").value;
         let newRoomId = this.roomList.length+1;
+        let newRoom = {
+          id: newRoomId,
+          ownerId: 1009,
+          ownerName: `${this.$store.state.user.userInfo.name}`,
+          title: roomTitle
+        }
+        console.log("room:");
+        console.log(newRoom);
+        // (back) room 추가
+        const { data } = await this.$axios.$get('room/create', {
+          room: newRoom
+        })
+        console.log('room create')
+        //this.goRoom(newRoomId);
+
+        // store room 추가
+        /*
         this.$store.state.chat.rooms.push({
           roomId: `${newRoomId}`,
           ownerId: "userID",
           ownerName: `${this.$store.state.user.userInfo.name}`,
           roomName: roomName
         });
-        this.goRoom(newRoomId);
+        */
       }
     }
 
