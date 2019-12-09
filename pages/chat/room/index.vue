@@ -5,7 +5,7 @@
       <div class="chat-container">
         <div class="chat-header">
           <h2>Room List</h2>
-          <h4 style="text-align: right">[user] {{$store.state.user.userInfo.name}}</h4>
+          <h4 style="text-align: right" class="">[user] {{$store.state.user.userInfo.name}}</h4>
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
@@ -18,7 +18,7 @@
         </ul>
         <!-- 방만들기 버튼 -->
         <div class="form-group text-center">
-          <button class="accent" @click="showModal=true">CREATE</button>
+          <button class="accent" @click="showModal=true" style="color:cadetblue">CREATE</button>
         </div>
       </div>
     </div>
