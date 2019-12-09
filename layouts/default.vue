@@ -114,6 +114,7 @@
     background-color: #ff4743;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
+    border-radius:10px;
   }
 
   #username-page {
@@ -158,7 +159,7 @@
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     margin-top: 30px;
     height: 90vh;
-    max-height: 600px;
+    max-height: 900px;
     position: relative;
   }
 

@@ -83,12 +83,16 @@ import Modal from '~/components/utils/Modal.vue'
   justify-content: center;
   flex-wrap: wrap;
   font-size: 0.9rem;
+  float: left;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 750px;
 }
 .room {
   border: 3px solid #dedede !important;
   width: 20vh;
   height: 20vh;
-  border-radius: 5%;
+  border-radius: 15px;
   margin: 10px !important;
 }
 .room:hover {
