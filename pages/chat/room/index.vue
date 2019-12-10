@@ -9,10 +9,10 @@
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
-          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
+          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.id" @click.prevent="goRoom(room.id)">
             <div>
-              <span>[{{ room.roomId }}] {{room.roomName}}</span>
-              <p>owner : {{ room.ownerName }}</p>
+              <span>[{{ room.id }}] {{room.name}}</span>
+              <p>owner : {{ room.name }}</p>
             </div>
           </li>
         </ul>
@@ -41,7 +41,9 @@ import Modal from '~/components/utils/Modal.vue'
       Modal
     },
     data() {
-      let rooms = this.$store.state.chat.rooms;
+      // let rooms = this.$store.state.chat.rooms;
+      let rooms = this.$store.state.chat.loadedData;
+      console.log(this.$store.state.chat.loadedData)
       return {
         roomList: rooms,
         showModal: false
@@ -69,7 +71,7 @@ import Modal from '~/components/utils/Modal.vue'
           ownerName: `${this.$store.state.user.userInfo.name}`,
           roomName: roomName
         });
-        this.goRoom(newRoomId);
+       // this.goRoom(newRoomId);
       }
     }
 
