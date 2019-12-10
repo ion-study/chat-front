@@ -41,7 +41,8 @@ export default {
     '@nuxtjs/axios'
   ],
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:8080'
+    // 모듈 설정
+    baseURL: process.env.BASE_URL || 'http://actdev.i-on.net:18080/'
   },
   /*
   ** Build configuration
