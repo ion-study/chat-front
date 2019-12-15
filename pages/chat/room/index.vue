@@ -26,8 +26,8 @@
     <Modal v-if="showModal" @close="showModal=false" @create="createRoom">
       <h3 slot="header" class="modal-h3">Create the Room</h3>
       <div slot="body" class="modal-cont">
-        <div><label for="room-title">title</label><input type="text" id="room-title" placeholder="제목"></div>
-        <div><label for="room-sec">공개 여부(임시)</label><input type="checkbox" id="room-sec"></div>
+        <div><label for="room-title">title</label><input type="text" v-model="roomTitle" id="room-title" placeholder="제목"></div>
+        <div><label for="room-sec">공개 여부(임시)</label><input type="checkbox" v-model="roomSec" id="room-sec"></div>
       </div>
     </Modal>
   </div>
@@ -46,7 +46,9 @@ import Modal from '~/components/utils/Modal.vue'
     },
     data() {
       return {
-        showModal: false
+        showModal: false,
+        roomTitle: "",
+        roomSec: false
       }
     },
     beforeCreate() {
@@ -62,32 +64,22 @@ import Modal from '~/components/utils/Modal.vue'
         this.$router.push('/chat/room/' + roomId);
       },
       async createRoom() {
-        let roomTitle = document.getElementById("room-title").value;
-        let newRoomId = this.roomList.length+1;
-        let newRoom = {
-          id: newRoomId,
-          ownerId: 1009,
-          ownerName: `${this.$store.state.user.userInfo.name}`,
-          title: roomTitle
-        }
-        console.log("room:");
-        console.log(newRoom);
+        // form-data 생성
+        let form = new FormData();
+        form.append('ownerId', 1000);
+        form.append('title',this.roomTitle);
+
         // (back) room 추가
-        const { data } = await this.$axios.$get('room/create', {
-          room: newRoom
-        })
+        const { data } = await this.$axios.$post('room/create', form);
+        console.log("data test:");
+        console.log(data);
+
+        // modal input 초기화
+        this.roomTitle = "";
+        this.roomSec = false;
+
         console.log('room create')
         //this.goRoom(newRoomId);
-
-        // store room 추가
-        /*
-        this.$store.state.chat.rooms.push({
-          roomId: `${newRoomId}`,
-          ownerId: "userID",
-          ownerName: `${this.$store.state.user.userInfo.name}`,
-          roomName: roomName
-        });
-        */
       }
     }
 
