@@ -6,7 +6,7 @@
         <div class="chat-header">
           <h2>Room List</h2>
           <div style="width:100%; margin:0 auto; max-width:630px; overflow: hidden;">
-            <button class="back-btn accent" style="float:left; width:70px; height:30px; margin:15px 0;">back</button>
+            <button class="back-btn accent" style="float:left; width:70px; height:30px; margin:15px 0;" onclick="history.back();">back</button>
             <h4 style="float:right;">[user] {{$store.state.user.userInfo.name}}</h4>
           </div>
         </div>
@@ -14,7 +14,6 @@
         <ul id="roomArea">
           <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
             <div class="left-box">
-              <p style="padding:75px 0;">이미지</p>
             </div>
             <div class="right-box">
               <p class="text-center">[{{ room.roomId }}] {{room.roomName}}</p>
@@ -104,12 +103,12 @@ import Modal from '~/components/utils/Modal.vue'
 
 .room .left-box{
   width:30%;
+  height: 100%;
   float:left;
-  border:1px solid #128ff2;
+  border:1px solid cadetblue;
   border-radius: 10px;
-  height:100%;
   text-align:center;
-  background:url("/static/img/icon_chat2.png");
+  background:url("~@/assets/img/chat.png") 23px 25px no-repeat;
 
 }
 .room .right-box{
@@ -124,7 +123,5 @@ import Modal from '~/components/utils/Modal.vue'
   margin-top: 0;
   color: #128ff2;
 }
-.modal-cont {
 
-}
 </style>
