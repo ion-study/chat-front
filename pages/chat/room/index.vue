@@ -5,20 +5,26 @@
       <div class="chat-container">
         <div class="chat-header">
           <h2>Room List</h2>
-          <h4 style="text-align: right" class="">[user] {{$store.state.user.userInfo.name}}</h4>
+          <div style="width:100%; margin:0 auto; max-width:630px; overflow: hidden;">
+            <button class="back-btn accent" style="float:left; width:70px; height:30px; margin:15px 0;">back</button>
+            <h4 style="float:right;">[user] {{$store.state.user.userInfo.name}}</h4>
+          </div>
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
           <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
-            <div>
-              <span>[{{ room.roomId }}] {{room.roomName}}</span>
-              <p>owner : {{ room.ownerName }}</p>
+            <div class="left-box">
+              <p style="padding:75px 0;">이미지</p>
+            </div>
+            <div class="right-box">
+              <p class="text-center">[{{ room.roomId }}] {{room.roomName}}</p>
+              <p class="text-center">owner : {{ room.ownerName }}</p>
             </div>
           </li>
         </ul>
         <!-- 방만들기 버튼 -->
         <div class="form-group text-center">
-          <button class="accent" @click="showModal=true" style="color:cadetblue">CREATE</button>
+          <button class="accent" @click="showModal=true">CREATE</button>
         </div>
       </div>
     </div>
@@ -83,10 +89,7 @@ import Modal from '~/components/utils/Modal.vue'
   justify-content: center;
   flex-wrap: wrap;
   font-size: 0.9rem;
-  float: left;
   width: 100%;
-  margin: 0 auto;
-  max-width: 750px;
 }
 .room {
   border: 3px solid #dedede !important;
@@ -97,6 +100,23 @@ import Modal from '~/components/utils/Modal.vue'
 }
 .room:hover {
   border: 3px solid #128ff2 !important;
+}
+
+.room .left-box{
+  width:30%;
+  float:left;
+  border:1px solid #128ff2;
+  border-radius: 10px;
+  height:100%;
+  text-align:center;
+  background:url("/static/img/icon_chat2.png");
+
+}
+.room .right-box{
+  width:70%;
+  float:right;
+  height:100%;
+  padding:55px 0;
 }
 
 /***** Modal Custom *****/

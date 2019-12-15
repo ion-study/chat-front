@@ -72,6 +72,9 @@
     margin: 20px 0;
   }
 
+  .modal-header {
+    text-align: center;
+  }
   .modal-default-button {
 
   }
