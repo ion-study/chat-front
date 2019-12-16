@@ -12,7 +12,7 @@
           <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.id" @click.prevent="goRoom(room.id)">
             <div>
               <span>[{{ room.id }}] {{room.name}}</span>
-              <p>owner : {{ room.name }}</p>
+              <p>owner : {{ room.owner }}</p>
             </div>
           </li>
         </ul>
@@ -66,11 +66,18 @@ import Modal from '~/components/utils/Modal.vue'
       async createRoom() {
         // form-data 생성
         let form = new FormData();
-        form.append('ownerId', 1000);
-        form.append('title',this.roomTitle);
+        form.append('owner', this.$store.state.user.userInfo.name);
+        form.append('name', this.roomTitle);
 
         // (back) room 추가
-        const { data } = await this.$axios.$post('room/create', form);
+        const { data } = await this.$axios({
+          method: 'post',
+          url: 'room/create',
+          data: form,
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
+        });
         console.log("data test:");
         console.log(data);
 
@@ -78,8 +85,8 @@ import Modal from '~/components/utils/Modal.vue'
         this.roomTitle = "";
         this.roomSec = false;
 
-        console.log('room create')
-        //this.goRoom(newRoomId);
+        // console.log('room create')
+        this.goRoom(data.data.id);
       }
     }
 
