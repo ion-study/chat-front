@@ -1,5 +1,6 @@
+var serviceConfig = require('./config/config')
 
-export default {
+module.exports =  {
   mode: 'universal',
   /*
   ** Headers of the page
@@ -42,7 +43,11 @@ export default {
   ],
   axios: {
     // 모듈 설정
-    baseURL: process.env.BASE_URL || 'http://actdev.i-on.net:18080/'
+    baseURL: serviceConfig.http.defaultAPIHost
+  },
+
+  env: {
+    baseUrl: serviceConfig.http.defaultAPIHost
   },
   /*
   ** Build configuration

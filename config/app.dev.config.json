@@ -1,0 +1,9 @@
+{
+  "http" : {
+    "defaultPort" : "3000",
+    "defaultAPIHost" : "http://localhost:8080",
+    "defaultFrontHost" : "http://localhost",
+    "DISABLE_COMPONENT_CACHE" : false,
+    "timeout" : 10000000
+  }
+}

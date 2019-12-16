@@ -71,7 +71,7 @@
     },
     methods: {
       connect() {
-        var socket = new SockJS('http://actdev.i-on.net:18080/ws');
+        var socket = new SockJS(`${process.env.baseUrl}/ws`);
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({}, this.onConnected, this.onError);
         console.log(this);

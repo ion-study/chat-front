@@ -5,13 +5,15 @@
   "author": "yujin song",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env NODE_ENV=dev node start.js",
+    "stg": "cross-env NODE_ENV=stg node start.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.8.0",
+    "cross-env": "^6.0.3",
     "net": "^1.0.2",
     "nuxt": "^2.0.0",
     "sockjs-client": "^1.4.0",

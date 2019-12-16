@@ -1,0 +1,9 @@
+{
+  "http" : {
+    "defaultPort" : "3000",
+    "defaultAPIHost" : "http://actdev.i-on.net:18080",
+    "defaultFrontHost" : "actdev.i-on.net",
+    "DISABLE_COMPONENT_CACHE" : false,
+    "timeout" : 10000000
+  }
+}
