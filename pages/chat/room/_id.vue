@@ -40,8 +40,6 @@
 </template>
 
 <script>
-  import SockJS from "sockjs-client";
-  import Stomp from "stompjs";
   export default {
     data() {
       return {
@@ -58,9 +56,7 @@
       }
     },
     mounted() {
-      let _vue = this;
-      console.log('mounted');
-      _vue.connect();
+      this.$ws.$connect({},this.onConnected, this.onError, this);
     },
     beforeRouteLeave (to, from, next) { // 현재 페이지 나가기 전 실행
       if(this.$store.state.user.userInfo.name) { // beforeCreate() 훅 때문에 분기처리 필요
@@ -70,12 +66,6 @@
       next();
     },
     methods: {
-      connect() {
-        var socket = new SockJS(`${process.env.baseUrl}/ws`);
-        this.stompClient = Stomp.over(socket);
-        this.stompClient.connect({}, this.onConnected, this.onError);
-        console.log(this);
-      },
       onConnected() {
         // roomId 구독
         this.stompClient.subscribe(`/topic/public/room/${this.roomId}`, this.onMessageReceived);
@@ -92,6 +82,7 @@
           this.stompClient.disconnect();
           console.log("stompClient disconnected");
         }
+        // this.$ws.$disconnect(this)
         // user state reset
         this.$store.state.user.userInfo.name = "";
         this.$store.state.user.userInfo.sessionId = "";
@@ -112,7 +103,7 @@
             }
             this.chatList.push({
               type: 'JOIN',
-              id: this.chatList.length+1,
+              id: this.chatList.length++,
               userName: `${body.sender}`,
               sessionId: `${body.sessionId}`,
               roomId: `${body.roomId}`
@@ -121,7 +112,7 @@
           case 'LEAVE':
             this.chatList.push({
               type: 'LEAVE',
-              id: this.chatList.length+1,
+              id: this.chatList.length++,
               userName: `${body.sender}`,
               sessionId: `${body.sessionId}`,
               roomId: `${body.roomId}`
@@ -130,7 +121,7 @@
           case 'CHAT':
             this.chatList.push({
               type: 'CHAT',
-              id: this.chatList.length + 1,
+              id: this.chatList.length++,
               userName: `${body.sender}`,
               content: `${body.content}`,
               sessionId: `${body.sessionId}`,
