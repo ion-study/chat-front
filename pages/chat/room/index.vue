@@ -9,10 +9,10 @@
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
-          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.id)">
+          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.id" @click.prevent="goRoom(room.id)">
             <div>
-              <span>[{{ room.id }}] {{room.title}}</span>
-              <p>owner : ({{room.ownerId}}) {{ room.ownerName }}</p>
+              <span>[{{ room.id }}] {{room.name}}</span>
+              <p>owner : {{ room.name }}</p>
             </div>
           </li>
         </ul>
