@@ -103,7 +103,7 @@
             }
             this.chatList.push({
               type: 'JOIN',
-              id: this.chatList.length++,
+              id: this.chatList.length+1,
               userName: `${body.sender}`,
               sessionId: `${body.sessionId}`,
               roomId: `${body.roomId}`
@@ -112,7 +112,7 @@
           case 'LEAVE':
             this.chatList.push({
               type: 'LEAVE',
-              id: this.chatList.length++,
+              id: this.chatList.length+1,
               userName: `${body.sender}`,
               sessionId: `${body.sessionId}`,
               roomId: `${body.roomId}`
@@ -121,7 +121,7 @@
           case 'CHAT':
             this.chatList.push({
               type: 'CHAT',
-              id: this.chatList.length++,
+              id: this.chatList.length+1,
               userName: `${body.sender}`,
               content: `${body.content}`,
               sessionId: `${body.sessionId}`,
