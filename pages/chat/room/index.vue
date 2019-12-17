@@ -5,12 +5,16 @@
       <div class="chat-container">
         <div class="chat-header">
           <h2>Room List</h2>
-          <h4 style="text-align: right">[user] {{$store.state.user.userInfo.name}}</h4>
+          <div class="chat-subheader">
+            <button class="accent" onclick="history.back();">BACK</button>
+            <h4><p id="user-icon"></p> <span>{{$store.state.user.userInfo.name}}</span></h4>
+          </div>
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
           <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
-            <div>
+            <div class="room-img-icon"></div>
+            <div class="room-info">
               <span>[{{ room.roomId }}] {{room.roomName}}</span>
               <p>owner : {{ room.ownerName }}</p>
             </div>
@@ -34,7 +38,7 @@
 </template>
 
 <script>
-import Modal from '~/components/utils/Modal.vue'
+  import Modal from '~/components/utils/Modal.vue'
   export default {
     name: "index",
     components: {
@@ -77,30 +81,62 @@ import Modal from '~/components/utils/Modal.vue'
 </script>
 
 <style scoped>
-#roomArea {
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-}
-.room {
-  border: 3px solid #dedede !important;
-  width: 20vh;
-  height: 20vh;
-  border-radius: 5%;
-  margin: 10px !important;
-}
-.room:hover {
-  border: 3px solid #128ff2 !important;
-}
-
-/***** Modal Custom *****/
-.modal-h3 {
-  margin-top: 0;
-  color: #128ff2;
-}
-.modal-cont {
-
-}
+  #roomArea {
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  .room {
+    border: 3px solid #dedede !important;
+    width: 20vh;
+    height: 20vh;
+    border-radius: 10px;
+    margin: 10px !important;
+  }
+  .room:hover {
+    border: 3px solid #128ff2 !important;
+  }
+  .room-img-icon{
+    float:left;
+    width:30%;
+    height:100%;
+    background:url("~assets/img/chat.png") 23px 20px no-repeat;
+    border:1px solid cadetblue;
+    border-radius: 10px;
+  }
+  .room-info{
+    float:left;
+    width:70%;
+    text-align: center;
+    margin-top:60px;
+  }
+  .chat-subheader{
+    width:100%;
+    max-width:640px;
+    height:40px;
+    margin: 0 auto;
+  }
+  .chat-subheader button{
+    display:inline;
+    float:left;
+    height: 40px;
+    border: 1px solid #acacac;
+  }
+  .chat-subheader h4{
+    text-align: right;
+  }
+  #user-icon{
+    display: inline-block;
+    background:url("~assets/img/man.png") no-repeat;
+    width:40px;
+    height: 40px;
+    margin : 0 auto;
+  }
+  /***** Modal Custom *****/
+  .modal-h3 {
+    margin-top: 0;
+    color: #128ff2;
+  }
 </style>
