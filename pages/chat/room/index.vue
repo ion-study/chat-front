@@ -102,7 +102,7 @@
     float:left;
     width:30%;
     height:100%;
-    background:url("~assets/img/chat.png") 23px 20px no-repeat;
+    /*background:url("~assets/img/chat.png") 23px 20px no-repeat;*/
     border:1px solid cadetblue;
     border-radius: 10px;
   }
@@ -129,7 +129,7 @@
   }
   #user-icon{
     display: inline-block;
-    background:url("~assets/img/man.png") no-repeat;
+    /*background:url("~assets/img/user1.png") no-repeat;*/
     width:40px;
     height: 40px;
     margin : 0 auto;
