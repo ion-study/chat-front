@@ -7,7 +7,7 @@
           <h2>Room List</h2>
           <div class="chat-subheader">
             <button class="accent" onclick="history.back();">BACK</button>
-            <h4><p id="user-icon"></p> <span>{{$store.state.user.userInfo.name}}</span></h4>
+            <h4><p id="user-icon"></p> <span id="user-name">{{$store.state.user.userInfo.name}}</span></h4>
           </div>
         </div>
         <!-- 채팅방 리스트 나열 -->
@@ -102,7 +102,7 @@
     float:left;
     width:30%;
     height:100%;
-    /*background:url("~assets/img/chat.png") 23px 20px no-repeat;*/
+    background:url("~assets/img/chat.png") 23px 20px no-repeat;
     border:1px solid cadetblue;
     border-radius: 10px;
   }
@@ -129,10 +129,16 @@
   }
   #user-icon{
     display: inline-block;
-    /*background:url("~assets/img/user1.png") no-repeat;*/
+    background:url("~assets/img/user1.png") no-repeat;
     width:40px;
     height: 40px;
     margin : 0 auto;
+  }
+
+  #user-name{
+    vertical-align: middle;
+    height: 58px;
+    display: inline-block;
   }
   /***** Modal Custom *****/
   .modal-h3 {
