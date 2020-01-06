@@ -10,6 +10,9 @@
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
           <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.id" @click.prevent="goRoom(room.id)">
+            <div v-if="$store.state.user.userInfo.name === room.owner">
+              <button @click.stop="deleteRoom(room)"><i class="far fa-window-close"></i></button>
+            </div>
             <div>
               <span>[{{ room.id }}] {{room.name}}</span>
               <p>owner : {{ room.owner }}</p>
@@ -41,7 +44,7 @@ import Modal from '~/components/utils/Modal.vue'
       Modal
     },
     async asyncData({ app }) {
-      const { data } = await app.$axios.$get('room/list')
+      const { data } = await app.$axios.$get('room/list');
       return { roomList: data }
     },
     data() {
@@ -87,6 +90,21 @@ import Modal from '~/components/utils/Modal.vue'
 
         // console.log('room create')
         this.goRoom(data.data.id);
+      },
+      async deleteRoom(room) {
+        if(room.owner === this.$store.state.user.userInfo.name) {
+          let result = confirm("정말 방을 삭제하시겠습니까?");
+          if(result){
+            // 방 삭제
+           await this.$axios.$get(`room/delete/${room.id}`);
+           // 방 리스트 reload
+            let test = await this.$axios.$get('room/list');
+            this.roomList.splice(0);
+            for(let i=0; i<test.data.length; i++) { /****** 코드 이쁘게 바꾸기! *****/
+              this.roomList.push(test.data[i]);
+            }
+          }
+        }
       }
     }
 

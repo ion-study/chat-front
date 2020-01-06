@@ -68,6 +68,8 @@
     methods: {
       onConnected() {
         // roomId 구독
+        console.log("onConnected() this:");
+        console.log(this);
         this.stompClient.subscribe(`/topic/public/room/${this.roomId}`, this.onMessageReceived);
         // Tell your username to the server
         this.stompClient.send("/app/chat.addUser",
