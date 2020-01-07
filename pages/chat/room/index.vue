@@ -30,7 +30,7 @@
     <Modal v-if="showModal" @close="showModal=false" @create="createRoom">
       <h3 slot="header" class="modal-h3">Create the Room</h3>
       <div slot="body" class="modal-cont">
-        <div><label for="room-name">title</label><input type="text" id="room-name" placeholder="제목"></div>
+        <div><label for="room-name">방 제목</label><input type="text" id="room-name" placeholder="제목"></div>
         <div><label for="room-sec">공개 여부(임시)</label><input type="checkbox" id="room-sec"></div>
       </div>
     </Modal>
@@ -38,17 +38,21 @@
 </template>
 
 <script>
-  import Modal from '~/components/utils/Modal.vue'
+import Modal from '~/components/utils/Modal.vue'
   export default {
     name: "index",
     components: {
       Modal
     },
+    async asyncData({ app }) {
+      const { data } = await app.$axios.$get('room/list')
+      return { roomList: data }
+    },
     data() {
-      let rooms = this.$store.state.chat.rooms;
       return {
-        roomList: rooms,
-        showModal: false
+        showModal: false,
+        roomTitle: "",
+        roomSec: false
       }
     },
     beforeCreate() {
@@ -63,17 +67,30 @@
         // chat페이지 이동
         this.$router.push('/chat/room/' + roomId);
       },
-      createRoom() {
-        let roomName = document.getElementById("room-name").value;
-        // store room 추가
-        let newRoomId = this.roomList.length+1;
-        this.$store.state.chat.rooms.push({
-          roomId: `${newRoomId}`,
-          ownerId: "userID",
-          ownerName: `${this.$store.state.user.userInfo.name}`,
-          roomName: roomName
+      async createRoom() {
+        // form-data 생성
+        let form = new FormData();
+        form.append('owner', this.$store.state.user.userInfo.name);
+        form.append('name', this.roomTitle);
+
+        // (back) room 추가
+        const { data } = await this.$axios({
+          method: 'post',
+          url: 'room/create',
+          data: form,
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
         });
-        this.goRoom(newRoomId);
+        console.log("data test:");
+        console.log(data);
+
+        // modal input 초기화
+        this.roomTitle = "";
+        this.roomSec = false;
+
+        // console.log('room create')
+        this.goRoom(data.data.id);
       }
     }
 
