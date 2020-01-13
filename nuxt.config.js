@@ -27,6 +27,12 @@ module.exports =  {
   css: [
   ],
   /*
+  ** Router / Middleware
+  */
+  router: {
+    middleware: 'auth'
+  },
+  /*
   ** Plugins to load before mounting the App
   */
   plugins: ['~/plugins/socket.js'],
