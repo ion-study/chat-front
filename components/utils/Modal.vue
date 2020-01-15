@@ -72,6 +72,9 @@
     margin: 20px 0;
   }
 
+  .modal-header {
+    text-align: center;
+  }
   .modal-default-button {
 
   }
@@ -97,5 +100,9 @@
   .modal-leave-active .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
+  }
+
+  @media screen and (max-width: 480px) {
+    .modal-container{ width: 320px; }
   }
 </style>

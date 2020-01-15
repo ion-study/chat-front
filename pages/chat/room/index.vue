@@ -5,17 +5,20 @@
       <div class="chat-container">
         <div class="chat-header">
           <h2>Room List</h2>
-          <h4 style="text-align: right">[user] {{$store.state.user.userInfo.name}}</h4>
+          <div class="chat-subheader">
+            <button class="accent" onclick="history.back();">BACK</button>
+            <h4><p id="user-icon"></p> <span id="user-name">{{$store.state.user.userInfo.name}}</span></h4>
+          </div>
         </div>
         <!-- 채팅방 리스트 나열 -->
         <ul id="roomArea">
-          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.id" @click.prevent="goRoom(room.id)">
+          <li class="room" v-for="room in roomList" :key="room.id" :data-room-id="room.roomId" @click.prevent="goRoom(room.roomId)">
             <div v-if="$store.state.user.userInfo.name === room.owner">
               <button @click.stop="deleteRoom(room)"><i class="far fa-window-close"></i></button>
             </div>
             <div>
-              <span>[{{ room.id }}] {{room.name}}</span>
-              <p>owner : {{ room.owner }}</p>
+              <span>[{{ room.roomId }}] {{room.roomName}}</span>
+              <p>owner : {{ room.ownerName }}</p>
             </div>
           </li>
         </ul>
@@ -112,30 +115,101 @@ import Modal from '~/components/utils/Modal.vue'
 </script>
 
 <style scoped>
-#roomArea {
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-}
-.room {
-  border: 3px solid #dedede !important;
-  width: 20vh;
-  height: 20vh;
-  border-radius: 5%;
-  margin: 10px !important;
-}
-.room:hover {
-  border: 3px solid #128ff2 !important;
-}
+  #roomArea {
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+  .room {
+    border: 3px solid #dedede !important;
+    width: 20vh;
+    height: 15vh;
+    border-radius: 10px;
+    margin: 10px !important;
+  }
+  .room:hover {
+    border: 3px solid #128ff2 !important;
+  }
+  .room-img-icon{
+    float:left;
+    width:30%;
+    height: 100%;
+    /*background:url("~assets/img/chat.png") 21px 0px no-repeat;*/
+    border:1px solid cadetblue;
+    border-radius: 10px;
+  }
+  .room-info{
+    float:left;
+    width:70%;
+    text-align: center;
+    margin-top:35px;
+  }
+  .form-group .accent{
+    margin-top:20px;
+  }
+  .chat-subheader{
+    width:100%;
+    max-width:640px;
+    height:40px;
+    margin: 0 auto;
+  }
+  .chat-subheader button{
+    display:inline;
+    float:left;
+    height: 40px;
+    border: 1px solid #acacac;
+  }
+  .chat-subheader h4{
+    text-align: right;
+  }
+  #chat-page ul{
+    overflow-y: scroll;
+  }
+  #user-icon{
+    display: inline-block;
+    /*background:url("~assets/img/user1.png") no-repeat;*/
+    width:40px;
+    height: 40px;
+    margin : 0 auto;
+  }
 
-/***** Modal Custom *****/
-.modal-h3 {
-  margin-top: 0;
-  color: #128ff2;
-}
-.modal-cont {
+  #user-name{
+    vertical-align: middle;
+    height: 58px;
+    display: inline-block;
+  }
+  /***** Modal Custom *****/
+  .modal-h3 {
+    margin-top: 0;
+    color: #333333;
+  }
+  .modal-cont{
+    width:100%;
+    border:1px solid cadetblue;
+    box-shadow: 2px 2px 5px #acacac;
+    border-radius: 10px;
+    margin:0 auto;
+    height: 80px;
+    line-height: 40px;
+    padding:0 10px;
 
-}
+  }
+  .modal-cont div label{
+    width:40%;
+    float:left;
+  }
+  @media screen and (max-width: 480px) {
+    .room-img-icon {
+      width: 40%;
+      /*background:url("assets/img/chat.png") -15px -20px no-repeat;*/
+    }
+
+    .room-info{
+      width: 60%;
+      margin-top:10px;
+    }
+  }
+
 </style>

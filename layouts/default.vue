@@ -34,7 +34,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: #128ff2;
+    background:cadetblue;
     content: "";
     z-index: 0;
   }
@@ -99,21 +99,23 @@
   }
 
   button.default {
-    background-color: #e8e8e8;
+    background-color: cadetblue;
     color: #333;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
   }
 
   button.primary {
-    background-color: #128ff2;
+    background-color: cadetblue;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
+    border-radius:10px;
   }
 
   button.accent {
-    background-color: #ff4743;
+    background-color: cadetblue;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
+    border-radius:10px;
   }
 
   #username-page {
@@ -158,7 +160,7 @@
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     margin-top: 30px;
     height: 90vh;
-    max-height: 600px;
+    max-height: 900px;
     position: relative;
   }
 
@@ -182,6 +184,9 @@
     padding: 10px 20px;
     margin: 0;
     border-bottom: 1px solid #f4f4f4;
+    float: left;
+    width: 100%;
+    overflow: hidden;
   }
 
   #chat-page ul li p {
@@ -308,6 +313,5 @@
     .chat-header h2 {
       font-size: 1.1em;
     }
-
   }
 </style>

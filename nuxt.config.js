@@ -30,7 +30,7 @@ module.exports =  {
   ** Router / Middleware
   */
   router: {
-    middleware: 'auth'
+    //middleware: 'auth'
   },
   /*
   ** Plugins to load before mounting the App
