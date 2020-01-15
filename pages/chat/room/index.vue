@@ -108,7 +108,7 @@ import Modal from '~/components/utils/Modal.vue'
   .room {
     border: 3px solid #dedede !important;
     width: 20vh;
-    height: 20vh;
+    height: 15vh;
     border-radius: 10px;
     margin: 10px !important;
   }
@@ -118,8 +118,8 @@ import Modal from '~/components/utils/Modal.vue'
   .room-img-icon{
     float:left;
     width:30%;
-    height:100%;
-    background:url("~assets/img/chat.png") 23px 20px no-repeat;
+    height: 100%;
+    /*background:url("~assets/img/chat.png") 21px 0px no-repeat;*/
     border:1px solid cadetblue;
     border-radius: 10px;
   }
@@ -127,7 +127,10 @@ import Modal from '~/components/utils/Modal.vue'
     float:left;
     width:70%;
     text-align: center;
-    margin-top:60px;
+    margin-top:35px;
+  }
+  .form-group .accent{
+    margin-top:20px;
   }
   .chat-subheader{
     width:100%;
@@ -144,9 +147,12 @@ import Modal from '~/components/utils/Modal.vue'
   .chat-subheader h4{
     text-align: right;
   }
+  #chat-page ul{
+    overflow-y: scroll;
+  }
   #user-icon{
     display: inline-block;
-    background:url("~assets/img/user1.png") no-repeat;
+    /*background:url("~assets/img/user1.png") no-repeat;*/
     width:40px;
     height: 40px;
     margin : 0 auto;
@@ -160,6 +166,33 @@ import Modal from '~/components/utils/Modal.vue'
   /***** Modal Custom *****/
   .modal-h3 {
     margin-top: 0;
-    color: #128ff2;
+    color: #333333;
   }
+  .modal-cont{
+    width:100%;
+    border:1px solid cadetblue;
+    box-shadow: 2px 2px 5px #acacac;
+    border-radius: 10px;
+    margin:0 auto;
+    height: 80px;
+    line-height: 40px;
+    padding:0 10px;
+
+  }
+  .modal-cont div label{
+    width:40%;
+    float:left;
+  }
+  @media screen and (max-width: 480px) {
+    .room-img-icon {
+      width: 40%;
+      /*background:url("assets/img/chat.png") -15px -20px no-repeat;*/
+    }
+
+    .room-info{
+      width: 60%;
+      margin-top:10px;
+    }
+  }
+
 </style>

@@ -34,7 +34,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: #128ff2;
+    background:cadetblue;
     content: "";
     z-index: 0;
   }
@@ -313,6 +313,5 @@
     .chat-header h2 {
       font-size: 1.1em;
     }
-
   }
 </style>
